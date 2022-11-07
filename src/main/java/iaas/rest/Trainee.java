@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import iaas.restExample.Constructor;
 import iaas.restExample.child;
+import iaas.restExample.varArgs;
 
 
 @Path("/trainee")
@@ -129,10 +130,10 @@ public class Trainee {
 		  String[] as=words;
 		
 				  for(int i=0;i<words.length;i++) {
-					  if(s.charAt(i).equels(''))
-					  char p=s.charAt(i-1);
+					  if((s.charAt(i)+"").equals(" "))
+					   
 		  }
-				  return p+"";
+				  return c+"";
 		
 	}
 	@Produces(MediaType.TEXT_HTML)
@@ -145,6 +146,16 @@ public class Trainee {
 		return c.getSavings(d)+"<br>"+c.getValue(i);
 		
 	}
+	@Produces(MediaType.TEXT_HTML)
+	@GET
+	@Path("varArgs/{values}/{f}")
+	public String getadd(@PathParam("values")String values,@PathParam("f") String f) {
+	String[] vals=values.split(",");
+	String[] v=f.split(",");
+	varArgs va=new varArgs();
 	
+	return va.addInt(vals)+""+"<br>"+va.addFloat(v)+"";
+	
+}
 }
 
