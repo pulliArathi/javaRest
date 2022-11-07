@@ -8,6 +8,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import iaas.restExample.Constructor;
+import iaas.restExample.InstanceOf;
 import iaas.restExample.child;
 import iaas.restExample.varArgs;
 
@@ -133,7 +134,7 @@ public class Trainee {
 					  if((s.charAt(i)+"").equals(" "))
 					   
 		  }
-				  return c+"";
+				  return s+"";
 		
 	}
 	@Produces(MediaType.TEXT_HTML)
@@ -157,5 +158,40 @@ public class Trainee {
 	return va.addInt(vals)+""+"<br>"+va.addFloat(v)+"";
 	
 }
+	@GET
+	@Path("Find_type")
+	@Produces(MediaType.TEXT_HTML)
+	public String type() {
+		InstanceOf<Integer> inst=new InstanceOf<Integer>();
+		InstanceOf<Float> ins1=new InstanceOf<Float>();
+		InstanceOf<String> inst2=new InstanceOf<String>();
+		inst.x=0;
+		ins1.x=3.5f;
+		inst2.x="Arathi";
+		return "first x value:  "+inst.getType()+"<br>"+"Second x value:  "+ins1.getType()+"<br>"+"Third x value:  "+inst2.getType();
+	}
+	
+	@GET
+	@Path("create_array")
+	@Produces(MediaType.TEXT_HTML)
+	public String getArrayValues() {
+		InstanceOf<Float> inst=new InstanceOf<Float>();
+		inst.createArray(56.8f,69.9f,58.4f,36.3f);
+		String s="";
+		for(Float i:inst.readArray())
+			s+=i+",";
+		InstanceOf<Integer> inst1=new InstanceOf<Integer>();
+		inst1.createArray(23,5,8,9,6,748,4);
+		String s1="";
+		for(Integer i:inst1.readArray())
+			s1+=i+",";
+		InstanceOf<String> inst2=new InstanceOf<String>();
+		inst2.createArray("Arathi","Hanu","Devendra Reddy","Varalakshmi");
+		String s2="";
+		for(String i:inst2.readArray())
+			s2+=i+",";
+		return "Float  values:"+s+"<br>"+"Integer values:"+s1+"<br>"+"String values:"+s2;
+		
+	}
 }
 
