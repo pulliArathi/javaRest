@@ -197,7 +197,7 @@ public class Trainee {
 		
 	}
 	@GET
-	@Path("Shape/{v}")
+	@Path("AbstractClass_Shape/{v}")
 	@Produces(MediaType.TEXT_HTML)
 	public String getShape(@PathParam("v")float v) {
 		Circle c1=new Circle() ;
