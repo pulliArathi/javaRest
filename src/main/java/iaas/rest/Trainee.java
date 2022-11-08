@@ -7,8 +7,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import iaas.restExample.Circle;
 import iaas.restExample.Constructor;
 import iaas.restExample.InstanceOf;
+import iaas.restExample.Square;
 import iaas.restExample.child;
 import iaas.restExample.varArgs;
 
@@ -162,13 +164,14 @@ public class Trainee {
 	@Path("Find_type")
 	@Produces(MediaType.TEXT_HTML)
 	public String type() {
-		InstanceOf<Integer> inst=new InstanceOf<Integer>();
+		InstanceOf<Object> inst=new InstanceOf<Object>();
+		/*InstanceOf<Integer> inst=new InstanceOf<Integer>();
 		InstanceOf<Float> ins1=new InstanceOf<Float>();
 		InstanceOf<String> inst2=new InstanceOf<String>();
 		inst.x=0;
 		ins1.x=3.5f;
-		inst2.x="Arathi";
-		return "first x value:  "+inst.getType()+"<br>"+"Second x value:  "+ins1.getType()+"<br>"+"Third x value:  "+inst2.getType();
+		inst2.x="Arathi";*/
+		return "value  of x"+inst.getType();
 	}
 	
 	@GET
@@ -191,6 +194,18 @@ public class Trainee {
 		for(String i:inst2.readArray())
 			s2+=i+",";
 		return "Float  values:"+s+"<br>"+"Integer values:"+s1+"<br>"+"String values:"+s2;
+		
+	}
+	@GET
+	@Path("Shape/{v}")
+	@Produces(MediaType.TEXT_HTML)
+	public String getShape(@PathParam("v")float v) {
+		Circle c1=new Circle() ;
+			String c2=c1.area(v)+"";
+			Square s1=new Square();
+			String s2=s1.area(v)+"";
+			
+			return "Circle:  "+c2+" "+c1.drawnBy("   arathi")+"<br>"+"Square: "+s2+" "+s1.drawnBy("   ArathiDevendra reddy");
 		
 	}
 }
