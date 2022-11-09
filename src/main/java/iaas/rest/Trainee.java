@@ -8,11 +8,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import iaas.restExample.Circle;
-import iaas.restExample.Constructor;
 import iaas.restExample.InstanceOf;
+import iaas.restExample.Number1;
 import iaas.restExample.Square;
 import iaas.restExample.child;
 import iaas.restExample.varArgs;
+
 
 
 @Path("/trainee")
@@ -133,7 +134,7 @@ public class Trainee {
 		  String[] as=words;
 		
 				  for(int i=0;i<words.length;i++) {
-					  if((s.charAt(i)+"").equals(" "))
+					
 					   
 		  }
 				  return s+"";
@@ -207,6 +208,18 @@ public class Trainee {
 			
 			return "Circle:  "+c2+" "+c1.drawnBy("   arathi")+"<br>"+"Square: "+s2+" "+s1.drawnBy("   ArathiDevendra reddy");
 		
+	}
+	
+	
+	@GET
+	@Path("Interface_Number1/{v}")
+	@Produces(MediaType.TEXT_HTML)
+	public String getNumber(@PathParam("v")float v) {
+		
+		Number1 n=(v1)->{
+		return "Addition of given number:   "+(v+v)+"<br>"+"Multiplication of given number:   "+(v*v)+"<br>"+"Division of given number:  "+(v/v)+"<br>"+"Substraction of given number:  "+(v-v);	
+		};
+		return n.add(v);
 	}
 }
 
