@@ -1,5 +1,8 @@
 package iaas.rest;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -18,6 +21,9 @@ import iaas.restExample.varArgs;
 
 @Path("/trainee")
 public class Trainee {
+	
+
+
 	@GET
 	@Produces("text/plain")
 	@Path("all")
@@ -214,12 +220,111 @@ public class Trainee {
 	@GET
 	@Path("Interface_Number1/{v}")
 	@Produces(MediaType.TEXT_HTML)
-	public String getNumber(@PathParam("v")float v) {
+	public String getNumber(@PathParam("v")int v) {
 		
 		Number1 n=(v1)->{
-		return "Addition of given number:   "+(v+v)+"<br>"+"Multiplication of given number:   "+(v*v)+"<br>"+"Division of given number:  "+(v/v)+"<br>"+"Substraction of given number:  "+(v-v);	
+			return  "Addition of given number:   "+(v+v)+"<br>"+"Multiplication of given number:   "+(v*v)+"<br>"+"Division of given number:  "+(v/v)+"<br>"+"Substraction of given number:  "+(v-v);
+				
 		};
-		return n.add(v);
+		Number1 n1=(v2)->{
+			int p=(v/2);
+			String s="";
+			if(p==1)
+				s+="Given number is prime number";
+			else
+				s+="Given number is not a prime number";
+			return s;	
+		};
+		Number1 n2=(v3)->{
+			int sum=0;
+			String f="";
+			int p=v;
+			int i=1;
+			while(i<=v/2) {
+				if(v%2==0)
+					sum=sum+i;
+				i++;
+			}
+				if(sum==p)
+					f+="Given number is perfect";
+				else
+					f+="Given number is not a perfect number";
+				return f;	
+			
+		};
+		Number1 n3=(v3)->{
+			int count=0;
+			int c=v;
+			while(c!=0) {
+				c=c/10;
+				count++;
+			}
+				return "Number of digits in a given number: "+count;
+		};
+		
+		return n.operation(v)+"<br>"+n1.operation(v)+"<br>"+n2.operation(v)+"<br>"+n3.operation(v);
 	}
+	
+	
+	@SuppressWarnings("resource")
+	@GET
+	@Path("read_file/{fname}")
+	@Produces(MediaType.TEXT_HTML)
+	public String readFile(@PathParam("fname")String fname) {
+		try {
+			FileInputStream in=new FileInputStream("C:\\Users\\user\\eclipse-workspace\\javaRest\\FileOperation\\"+fname);
+			int c=in.read();
+			String s="";
+			while(c!=-1) {
+				if(c==13)
+					s+="<br>";
+				else
+					s+=(char)c;
+				c=in.read();
+			}
+			return s;
+		}
+		catch(Exception e) {
+			return e.getMessage();
+		}
+	}
+	@GET
+	@Path("write_file/{fname}/{data}")
+	@Produces(MediaType.TEXT_HTML)
+	public String writeFile(@PathParam("fname")String fname,@PathParam("data")String data) {
+		try {
+			FileOutputStream out=new FileOutputStream("C:\\Users\\user\\eclipse-workspace\\javaRest\\FileOperation\\"+fname,true);
+			byte b[]=data.getBytes();
+			out.write(b);
+			out.write(System.lineSeparator().getBytes());
+			return "data saved in file";
+		}
+		catch(Exception e) {
+			return e.getMessage();
+		}
+	}
+	
+	@GET
+	@Path("write_file/{fname}/{a},{b}")
+	@Produces(MediaType.TEXT_HTML)
+	public String witeFile_add(@PathParam("fname")String fname,@PathParam("a")int a, @PathParam("b")int b) {
+		try {
+		
+			FileOutputStream out=new FileOutputStream("C:\\Users\\user\\eclipse-workspace\\javaRest\\FileOperation\\"+fname);
+			out.write(("First Number "+a).getBytes());
+			out.write(System.lineSeparator().getBytes());
+			out.write(("Second number "+b).getBytes());
+			out.write(System.lineSeparator().getBytes());
+			int c=a+b;
+			out.write(("adding above two numbers "+c).getBytes());
+			out.write(System.lineSeparator().getBytes());
+			
+			return "data saved in file"+"<br>"+"adding two numbers: "+c;
+		}
+		catch(Exception e) {
+			return e.getMessage();
+		}
+	}
+	
 }
 
