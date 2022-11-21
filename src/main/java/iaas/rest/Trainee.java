@@ -12,8 +12,12 @@ import javax.ws.rs.core.MediaType;
 
 import iaas.restExample.Circle;
 import iaas.restExample.InstanceOf;
+import iaas.restExample.LessAgeException;
 import iaas.restExample.Number1;
+import iaas.restExample.Seasons;
+import iaas.restExample.Signal;
 import iaas.restExample.Square;
+import iaas.restExample.Vote;
 import iaas.restExample.child;
 import iaas.restExample.varArgs;
 
@@ -263,6 +267,120 @@ public class Trainee {
 		};
 		
 		return n.operation(v)+"<br>"+n1.operation(v)+"<br>"+n2.operation(v)+"<br>"+n3.operation(v);
+	}
+	@GET
+	@Path("signal/{color}")
+	@Produces(MediaType.TEXT_HTML)
+	public String getSignal(@PathParam("color")String color) {
+		int code=0;
+		String text="";
+		String result="";
+		Signal signal=Signal.valueOf(color.toUpperCase());
+		try {
+			for(int i=0;i<4;i++) {
+				code+=(int)color.toUpperCase().charAt(i);
+			}
+			switch(signal) {
+			case RED:
+				text="<font color='red' size=10px>";
+				break;
+			case YELLOW:
+				text="<font color='yellow' size=10px>";
+				break;
+			case GREEN:
+				text="<font color='green' size=10px>";
+				break;
+			default:
+				text="<font color='green' size=10px>";
+			}
+			result=text+signal.toString()+":"+signal.action+":"+signal.time+":"+code+"</font>";
+			return result;
+		}
+		catch(IllegalArgumentException ex) {
+			result="<font color='"+color+"' size=10px>The given signal color is not valid</font>";
+			return result;
+		}
+		catch(StringIndexOutOfBoundsException ex) {
+			text="<font color='"+color+"' size=10px>";
+			result=text+signal.toString()+":"+signal.action+":"+signal.time+":"+code+"</font>";
+			return result;
+		}
+		catch(Exception ex) {
+			return "";
+		}
+		
+	}
+	
+	@GET
+	@Path("all_signals")
+	@Produces(MediaType.TEXT_HTML)
+	public String getAllSignals() {
+		String allSig="";
+		for(Signal sig:Signal.values())
+			allSig+=sig.toString()+"<br>";
+		return allSig;
+	}
+	
+	@GET
+	@Path("vote/{age}")
+	@Produces(MediaType.TEXT_HTML)
+	public String vote(@PathParam("age")int age) {
+		String votingPage="";
+		try {
+			Vote vote=new Vote();
+			if(vote.canVote(age))
+				votingPage="<form><input type='radio' name='party'>BJP<br><input type='radio' name='party'>TRS<br><input type='radio' name='party'>Congress<br><input type='radio' name='party'>MIM";
+			else
+				throw new LessAgeException("U r not eligible");
+			return votingPage;
+		}
+		catch(LessAgeException e) {
+			votingPage=e.getMessage();
+			return votingPage;
+		}
+		
+	}
+	@GET
+	@Path("seasons/{sname}")
+	@Produces(MediaType.TEXT_HTML)
+	public String getSeasons(@PathParam("sname")String sname) {
+		int code=0;
+		String text="";
+		String result="";
+		Seasons s=Seasons.valueOf(sname.toUpperCase());
+		try {
+			for(int i=0;i<4;i++) {
+				code+=(int)sname.toUpperCase().charAt(i);
+			}
+			switch(s) {
+			case SUMMER:
+				text="<font color='orange' size=10px>";
+				break;
+			case WINTER:
+				text="<font color='yellow' size=10px>";
+				break;
+			case SPRING:
+				text="<font color='green' size=10px>";
+				break;
+			default:
+				text="<font color='green' size=10px>";
+			}
+			result=text+s.toString()+":"+s.seasons+":"+s.temp+":"+code+"</font>";
+			return result;
+		}
+		catch(IllegalArgumentException ex) {
+			result="<font color='"+sname+"' size=10px>The given signal color is not valid</font>";
+			return result;
+		}
+		catch(StringIndexOutOfBoundsException ex) {
+			text="<font color='"+sname+"' size=10px>";
+			result=text+s.toString()+":"+s.seasons+":"+s.temp+":"+code+"</font>";
+			return result;
+		}
+		catch(Exception ex) {
+			return "";
+		}
+		
 	}
 	
 	
