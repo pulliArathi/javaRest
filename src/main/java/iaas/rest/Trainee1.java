@@ -23,8 +23,8 @@ public class Trainee1 {
 		
 		e1.id=101 ;
 		e1.name="arathi ";
-		e1.Designation="java developer ";
-		e1.location="Bang ";
+		//e1.Designation="java developer ";
+		//e1.location="Bang ";
 		e1.sal=4500;
 		double as=((Employee1) e1).Salary();
 		return e1.toString()+"<br>"+as;
@@ -204,6 +204,7 @@ public class Trainee1 {
 		return d+"";
 		
 	}
+	
 }
 	
 	
